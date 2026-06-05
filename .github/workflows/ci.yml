@@ -27,6 +27,7 @@ jobs:
         run: |
           test -f package.json
           test -f wdio.conf.js
+          test -f config/wdio.browserstack.conf.js
           test -d test/specs
           test -d test/pageobjects
           test -d docs
@@ -34,3 +35,47 @@ jobs:
 
       - name: Show available test scripts
         run: npm run
+
+  browserstack-smoke-test:
+    runs-on: ubuntu-latest
+    needs: validate-project
+
+    env:
+      BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
+      BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
+      BROWSERSTACK_APP_ID: ${{ secrets.BROWSERSTACK_APP_ID }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run BrowserStack smoke test
+        run: npm run wdio:browserstack
+
+      - name: Generate Allure Report
+        if: always()
+        run: npm run allure:generate
+
+      - name: Upload Allure Report Artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-report
+          path: allure-report
+
+      - name: Upload Allure Results Artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results
+          path: allure-results
+
