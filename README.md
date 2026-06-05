@@ -88,6 +88,7 @@ Mais detalhes estão disponíveis em:
 
 - [Configuração do WebdriverIO](./docs/02_wdio_config.md)
 
+
 ## Aplicativo utilizado
 
 O aplicativo utilizado nos testes é o **Native Demo App** do WebdriverIO.
@@ -172,6 +173,18 @@ test/data/signup.data.json
 
 ---
 
+## BrowserStack
+
+O projeto possui integração com BrowserStack App Automate para execução dos testes em dispositivos reais na nuvem.
+
+A execução foi validada com o comando:
+
+```bash
+npm run wdio:browserstack
+```
+
+---
+
 ## Cobertura dos testes
 
 A suíte automatizada cobre os seguintes grupos de cenários:
@@ -184,6 +197,18 @@ A suíte automatizada cobre os seguintes grupos de cenários:
 | Navegação   |          4 |
 | Formulários |          2 |
 | Total       |         14 |
+
+---
+
+## CI/CD
+
+O projeto possui configuração de pipeline para GitLab CI/CD no arquivo `.gitlab-ci.yml`.
+
+A execução mobile em CI foi preparada para utilizar BrowserStack App Automate, evitando dependência de runner com Android Emulator e KVM.
+
+Como o repositório está hospedado no GitHub, também foi adicionada uma configuração básica em `.github/workflows/ci.yml` para validação da estrutura do projeto.
+
+Para executar o pipeline mobile real no GitLab, é necessário configurar as variáveis `BROWSERSTACK_USERNAME`, `BROWSERSTACK_ACCESS_KEY` e `BROWSERSTACK_APP_ID` nas variáveis protegidas do GitLab CI/CD.
 
 ---
 

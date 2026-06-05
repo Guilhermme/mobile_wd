@@ -1,0 +1,65 @@
+stages:
+  - validate
+  - test
+  - report
+
+variables:
+  npm_config_cache: "$CI_PROJECT_DIR/.npm"
+
+cache:
+  key:
+    files:
+      - package-lock.json
+  paths:
+    - .npm/
+
+validate_project:
+  stage: validate
+  image: node:24
+  script:
+    - node -v
+    - npm -v
+    - npm ci
+    - test -f package.json
+    - test -f wdio.conf.js
+    - test -f config/wdio.browserstack.conf.js
+    - test -d test/specs
+    - test -d test/pageobjects
+    - test -d docs
+    - test -d app
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH
+
+mobile_tests_browserstack:
+  stage: test
+  image: node:24
+  script:
+    - npm ci
+    - npm run wdio:browserstack
+  artifacts:
+    when: always
+    paths:
+      - allure-results/
+      - screenshots/
+    expire_in: 7 days
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH
+
+generate_allure_report:
+  stage: report
+  image: node:24
+  script:
+    - npm ci
+    - npm run allure:generate
+  artifacts:
+    when: always
+    paths:
+      - allure-report/
+    expire_in: 7 days
+  dependencies:
+    - mobile_tests_browserstack
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH
