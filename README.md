@@ -1,5 +1,7 @@
 # Desafio de Automação de Testes Mobile
 
+![Mobile Automation CI](https://github.com/Guilhermme/mobile_wd/actions/workflows/ci.yml/badge.svg)
+
 Projeto de automação mobile utilizando **WebdriverIO**, **Appium**, **JavaScript**, **Mocha**, **Chai**, **Allure Report** e padrão **Page Object Model**.
 
 O objetivo do projeto é automatizar cenários de teste no aplicativo **Native Demo App** do WebdriverIO, cobrindo funcionalidades como login, cadastro, navegação entre telas, preenchimento de formulários e validação de mensagens de sucesso e erro.
