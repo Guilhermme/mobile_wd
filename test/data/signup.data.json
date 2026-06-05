@@ -1,0 +1,12 @@
+{
+  "validUser": {
+    "email": "cadastro@email.com",
+    "password": "12345678",
+    "confirmPassword": "12345678"
+  },
+  "invalidEmailUser": {
+    "email": "email-invalido",
+    "password": "12345678",
+    "confirmPassword": "12345678"
+  }
+}

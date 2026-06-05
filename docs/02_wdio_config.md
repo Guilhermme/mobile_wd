@@ -395,3 +395,11 @@ Comunicação WebdriverIO + Appium + Emulador validada
 ```
 
 ---
+
+## Execução em Android e iOS
+
+O projeto foi implementado e validado em emulador Android local utilizando Appium com o driver UiAutomator2.
+
+A estrutura do projeto permite evolução para execução em iOS utilizando Appium com o driver XCUITest. Para execução em iOS, é necessário ambiente macOS com Xcode, iOS Simulator e build iOS do aplicativo.
+
+No ambiente atual Linux, a execução iOS não é suportada localmente, pois depende de ferramentas exclusivas do ecossistema Apple.

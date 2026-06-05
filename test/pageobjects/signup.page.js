@@ -1,4 +1,4 @@
-class LoginPage {
+class SignUpPage {
   get emailInput () {
     return $('~input-email');
   }
@@ -7,16 +7,20 @@ class LoginPage {
     return $('~input-password');
   }
 
-  get loginButton () {
-    return $('~button-LOGIN');
+  get confirmPasswordInput () {
+    return $('~input-repeat-password');
+  }
+
+  get signUpButton () {
+    return $('~button-SIGN UP');
   }
 
   get successTitle () {
-    return $('android=new UiSelector().text("Success")');
+    return $('android=new UiSelector().text("Signed Up!")');
   }
 
   get successMessage () {
-    return $('android=new UiSelector().text("You are logged in!")');
+    return $('android=new UiSelector().text("You successfully signed up!")');
   }
 
   get okButton () {
@@ -27,19 +31,21 @@ class LoginPage {
     return $('android=new UiSelector().textContains("Please enter a valid email address")');
   }
 
-  async validateLoginScreen () {
+  async validateSignUpScreen () {
     await expect(this.emailInput).toBeDisplayed();
     await expect(this.passwordInput).toBeDisplayed();
-    await expect(this.loginButton).toBeDisplayed();
+    await expect(this.confirmPasswordInput).toBeDisplayed();
+    await expect(this.signUpButton).toBeDisplayed();
   }
 
-  async login (email, password) {
+  async signUp (email, password, confirmPassword) {
     await this.emailInput.setValue(email);
     await this.passwordInput.setValue(password);
-    await this.loginButton.click();
+    await this.confirmPasswordInput.setValue(confirmPassword);
+    await this.signUpButton.click();
   }
 
-  async validateSuccessLogin () {
+  async validateSuccessSignUp () {
     await expect(this.successTitle).toBeDisplayed();
     await expect(this.successMessage).toBeDisplayed();
   }
@@ -51,10 +57,6 @@ class LoginPage {
   async validateInvalidEmailMessage () {
     await expect(this.invalidEmailMessage).toBeDisplayed();
   }
-
-  async goToSignUp () {
-    await $('~button-sign-up-container').click();
-  }
 }
 
-module.exports = new LoginPage();
+module.exports = new SignUpPage();
